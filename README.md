@@ -1,6 +1,8 @@
 # busybeaver
-Repoistory for educational purposes // Simulating and Preventing a SYN Flood Attack in a Virtual Cybersecurity Lab
+<img src="beaver-icon.png" width="200" height="200">
 
+# Purpose
+Repoistory for educational purposes // Simulating and Preventing a SYN Flood Attack in a Virtual Cybersecurity Lab
 # Objective
  - Simulate a TCP SYN flood attack using Kali Linux and hping3.
  - Monitor attack traffic with Wireshark.
