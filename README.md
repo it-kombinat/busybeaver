@@ -10,7 +10,7 @@ Repoistory for educational purposes // Simulating and Preventing a SYN Flood Att
  - Strengthen the target system with firewall rules and SYN cookies.
 
 # Set up Lab
-    echo "10.0.0.10 busybeaver.com" >> /etc/hosts
+    echo "10.0.0.10 busybeaver.com bb.com" >> /etc/hosts
 
 # Victim machine
 ## Set up Webserver (on victim machine)
@@ -28,7 +28,7 @@ Repoistory for educational purposes // Simulating and Preventing a SYN Flood Att
 # Launching the SYN Flood Attack
 This created a flood of half-open connections on the Ubuntu server — the classic symptom of a SYN flood.
     
-    hping3 -S --flood -p 80 -d 200 -w 64 10.0.0.10
+    sudo hping3 -S --flood -p 80 -d 200 -w 64 10.0.0.10
 
 `Command Breakdown`
 - -S: Send SYN flag (starts handshake)
@@ -47,7 +47,7 @@ This tells the kernel to handle SYN floods more efficiently using stateless SYN-
 ## Apply iptables Rate Limiting
 This limits new SYN connections to 10 per second, preventing overload.
 
-    sudo iptables -A INPUT -p tcp — dport 80 — syn -m limit — limit 10/s — limit-burst 20 -j ACCEPT
+    sudo iptables -A INPUT -p tcp --dport 80 --syn -m limit --limit 10/s --limit-burst 20 -j ACCEPT
 
 ## Block Attack IP
     sudo iptables -A INPUT -s 10.0.0.66 -j DROP
@@ -60,3 +60,9 @@ This limits new SYN connections to 10 per second, preventing overload.
 
 ## Run snort
     sudo snort -A console -q -c syn.rules -i ens5
+## Credits/Resources
+- https://github.com/adamalston/SYN-Flood
+- https://java2depth.blogspot.com/2019/03/tcp-syn-flood-attack-ip-and-packets.html
+- https://heimdalsecurity.com/blog/syn-flood/
+- https://www.firewall.cx/tools-tips-reviews/network-protocol-analyzers/performing-tcp-syn-flood-attack-and-detecting-it-with-wireshark.html
+- https://medium.com/@chigozieiroegbulam/%EF%B8%8F-simulating-and-preventing-a-syn-flood-attack-in-a-virtual-cybersecurity-lab-ee6c560493c2
