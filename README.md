@@ -22,7 +22,19 @@ Repoistory for educational purposes // Simulating and Preventing a SYN Flood Att
 ## Wireshark
     sudo -E wireshark
     # Filter tcp.flags.syn == 1 and tcp.flags.ack == 0
+    
+# Launching the SYN Flood Attack
+This created a flood of half-open connections on the Ubuntu server — the classic symptom of a SYN flood.
+    
+    hping3 -S --flood -p 80 -d 200 -w 64 10.0.0.10
 
+`Command Breakdown`
+- -S: Send SYN flag (starts handshake)
+- --flood: Send packets continuously
+- -p 80: Target port
+- -d 200: Packet payload size
+- -w 64: TCP window size
+- 10.0.0.10: Target IP
 
 # Mitigation Strategies
 ## Enable SYN Cookies
@@ -45,4 +57,4 @@ This limits new SYN connections to 10 per second, preventing overload.
     drop tcp any any -> any 80 (msg:”Blocked TCP traffic to port 80"; sid:100002; rev:1;)
 
 ## Run snort
-   sudo snort -A console -q -c syn.rules -i ens5
+    sudo snort -A console -q -c syn.rules -i ens5
